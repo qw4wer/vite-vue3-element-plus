@@ -1,50 +1,57 @@
 import httpUtils from '../utils/http.utils'
 
 const urls = {
-  login: '/api/users/login',
-  getRouterAndPermissions: '/api/users/getRouterAndPermissions',
-  findUserByCond: '/api/users/findUserByCond',
-  addUser: '/api/users/addUser',
-  findUserById: '/api/users/findUserById',
-  updateUser: '/api/users/updateUser'
+  login:'/api/users/login',
+  getRouterAndPermissions:'/api/users/getRouterAndPermissions',
+  findUserByCond:'/api/users/findUserByCond',
+  addUser:'/api/users/addUser',
+  findUserById:'/api/users/findUserById',
+  updateUser:'/api/users/updateUser',
+  removeUser:'/api/users/removeUser'
 }
 
 export default {
-  login: (userName, userPwd) => {
+  login:(userName, userPwd) => {
     // console.log({userName, userPwd});
     return httpUtils.post({
-      url: urls.login,
-      data: { userName, userPwd }
+      url:urls.login,
+      data:{userName, userPwd}
     })
   },
-  getRouterAndPermissions: (token) => {
+  getRouterAndPermissions:(token) => {
     return httpUtils.post({
-      url: urls.getRouterAndPermissions,
-      data: token
+      url:urls.getRouterAndPermissions,
+      data:token
     })
   },
-  findUserByCond: (cond) => {
+  findUserByCond:(cond) => {
     return httpUtils.post({
-      url: urls.findUserByCond,
-      data: cond
+      url:urls.findUserByCond,
+      data:cond
     })
   },
-  addUser: (userForm) => {
+  addUser:(userForm) => {
     return httpUtils.post({
-      url: urls.addUser,
-      data: userForm
+      url:urls.addUser,
+      data:userForm
     })
   },
-  findUserById: (id) => {
+  findUserById:(id) => {
     return httpUtils.post({
-      url: urls.findUserById,
-      data: { id: id }
+      url:urls.findUserById,
+      data:{id:id}
     })
   },
-  updateUser: (userForm) => {
+  updateUser:(userForm) => {
     return httpUtils.post({
-      url: urls.updateUser,
-      data: userForm
+      url:urls.updateUser,
+      data:userForm
+    })
+  },
+  removeUser:(id) => {
+    return httpUtils.post({
+      url:urls.removeUser,
+      data:{id:id}
     })
   }
 

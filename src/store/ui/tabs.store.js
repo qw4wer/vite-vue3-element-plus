@@ -59,8 +59,10 @@ export default {
     },
     addOrSelectTab({commit, state}, payload) {
       const arr = common.flatObjByPath(state.items, 'path')
-
       const {path, title} = payload
+      if (!path) {
+        return;
+      }
       if (arr.includes(`/${path}`)) {
         commit('selectItem', `/${path}`)
       } else {

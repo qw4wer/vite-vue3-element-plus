@@ -7,8 +7,9 @@
 </template>
 
 <style>
-#app {
-  text-align: center;
-  color: #2c3e50;
+html,body,body,#app {
+  margin: 0;
+  padding: 0;
+  height: 100%;
 }
 </style>

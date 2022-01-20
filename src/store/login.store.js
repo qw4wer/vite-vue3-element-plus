@@ -50,7 +50,7 @@ export default {
           db.set('token', token)
 
           setTimeout(() => {
-            $router.push('/')
+            $router.push('/home')
           }, 1000)
         } else {
           commit('showMessage', '登录失败，用户名或密码错误')

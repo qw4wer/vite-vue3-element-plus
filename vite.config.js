@@ -15,6 +15,7 @@ export default defineConfig({
       resolvers:[ElementPlusResolver()],
     }),
     Components({
+      dirs:['src/components','src/views'],
       resolvers:[ElementPlusResolver()],
     }),
   ],
@@ -26,12 +27,13 @@ export default defineConfig({
   server:{
     proxy:{
       '/api':{
-        target:'http://127.0.0.1:8003',
+        target:'http://localhost:8003',
         changeOrigin:true,
         // rewrite:(path) => path.replace(/^\/api/, ''),
         timeout:2000
       },
     },
+    host:'0.0.0.0',
     fs:{
       // 可以为项目根目录的上一级提供服务
       allow:['..']

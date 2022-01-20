@@ -5,7 +5,7 @@
         :model-value="dialogVisible"
         :width="width"
         :before-close="handleClose">
-      <slot name="body">
+      <slot name="body" ref="bb">
       </slot>
 
       <span slot="footer" class="dialog-footer">
@@ -27,9 +27,25 @@
   </div>
 </template>
 <script>
+import {provide} from "vue";
+
 export default {
   name:'form-dialog',
   mounted() {
+  },
+  setup() {
+    let form
+    provide("register", function (fn) {
+      form = fn.call();
+    });
+
+    function getForm() {
+      return form;
+    }
+
+    return {
+      getForm
+    }
   },
   computed:{
     errMsgVisible:function () {
@@ -82,18 +98,23 @@ export default {
     }
     ,
     determine() {
-      // console.log(this.form)
-      if (this.$slots.body) {
-        this.$slots.body[0].componentInstance.validate().then(d => {
+      if (this.getForm) {
+        const {validate, clear} = this.getForm()
+        validate().then(d => {
           if (d) {
             this.submitFn().then(({data}) => {
               if (data.type) {
-                this.operatingState = '操作成功',
-                    setTimeout(() => {
-                      this.dialogVisible = false
-                      this.operatingState = ''
-                      this.afterSubmitFn()
-                    }, 1000)
+                this.$nextTick(() => {
+                  this.operatingState = '操作成功'
+                  this.$message({
+                    message:'新建成功',
+                    type:'success',
+                  })
+                  this.dialogVisible = false
+                  this.operatingState = ''
+                  this.afterSubmitFn()
+                  clear()
+                })
               } else {
                 this.operatingState = '操作失败'
                 this.errMsg = data.errMsg
