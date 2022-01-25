@@ -21,6 +21,7 @@
   "devDependencies": {
     "@fortawesome/vue-fontawesome": "prerelease",
     "@vitejs/plugin-vue": "^2.0.0",
+    "await-to-js": "^3.0.0",
     "axios": "^0.24.0",
     "unplugin-auto-import": "^0.5.5",
     "unplugin-vue-components": "^0.17.11",

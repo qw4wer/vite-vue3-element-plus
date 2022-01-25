@@ -102,7 +102,7 @@ export default {
         const {validate, clear} = this.getForm()
         validate().then(d => {
           if (d) {
-            this.submitFn().then(({data}) => {
+            this.submitFn().then((data) => {
               if (data.type) {
                 this.$nextTick(() => {
                   this.operatingState = '操作成功'
