@@ -15,7 +15,7 @@ export default defineConfig({
       resolvers:[ElementPlusResolver()],
     }),
     Components({
-      dirs:['src/components','src/views'],
+      dirs:['src/components', 'src/views'],
       resolvers:[ElementPlusResolver()],
     }),
   ],

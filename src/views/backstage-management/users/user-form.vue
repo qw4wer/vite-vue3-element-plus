@@ -5,7 +5,6 @@
     </el-form-item>
     <el-form-item label="中文名" prop="realName">
       <el-input v-model="userFormData.realName"></el-input>
-      <input type="button" @click="test" value="xxx">
     </el-form-item>
   </el-form>
 </template>

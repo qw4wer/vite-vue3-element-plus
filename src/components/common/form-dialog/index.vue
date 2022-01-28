@@ -103,11 +103,12 @@ export default {
         validate().then(d => {
           if (d) {
             this.submitFn().then((data) => {
+              console.log("data", data)
               if (data.type) {
                 this.$nextTick(() => {
                   this.operatingState = '操作成功'
                   this.$message({
-                    message:'新建成功',
+                    message:'操作成功',
                     type:'success',
                   })
                   this.dialogVisible = false

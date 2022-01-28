@@ -24,7 +24,7 @@ export default {
     initNavMenu ({ commit, state }, payload) {
       const menus = []
       payload.forEach((menu, i) => {
-        if (!menu.entity.hide) {
+        if (!menu.hide) {
           menus.push(menu)
         }
       })

@@ -1,6 +1,6 @@
 import {ref} from 'vue'
 import apis from '../apis'
-import to from 'await-to-js';
+import to from 'await-to-js'
 import {ElMessage, ElMessageBox} from 'element-plus'
 
 export default function bind({module, queryForm, formData, dialog}, instance) {
@@ -34,7 +34,7 @@ export default function bind({module, queryForm, formData, dialog}, instance) {
 
   const toAdd = async() => {
     formData.value = {}
-    action.value = 'update'
+    action.value = 'add'
     ctx.$refs[dialog].openDialog()
   }
 
@@ -116,7 +116,7 @@ export default function bind({module, queryForm, formData, dialog}, instance) {
     update,
     submitFn,
     clear,
-    toDel
+    toDel,
   }
 
 }
