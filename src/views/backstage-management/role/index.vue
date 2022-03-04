@@ -1,14 +1,14 @@
 <template>
   <div>
     <el-form :inline="true" :model="queryForm" class="demo-form-inline">
-      <el-form-item label="账号">
-        <el-input v-model="queryForm.userName" placeholder="账号"></el-input>
+      <el-form-item label="角色名称">
+        <el-input v-model="queryForm.name" placeholder="角色名称"></el-input>
       </el-form-item>
-      <el-form-item label="中文名">
-        <el-input v-model="queryForm.realName" placeholder="账号"></el-input>
+      <el-form-item label="描述">
+        <el-input v-model="queryForm.describe" placeholder="描述"></el-input>
       </el-form-item>
-      <el-form-item label="用户状态">
-        <el-select v-model="queryForm.status" placeholder="用户状态">
+      <el-form-item label="角色状态">
+        <el-select v-model="queryForm.status" placeholder="状态">
           <el-option label="全部" value=""></el-option>
           <el-option label="正常" value="0"></el-option>
           <el-option label="禁用" value="1"></el-option>
@@ -20,75 +20,69 @@
       </el-form-item>
     </el-form>
 
-    <el-table v-loading="isLoading" :data="tableData" highlight-current-row style="width: 100%" border
-              :max-height="tableHeight">
-      <el-table-column v-if=false prop="id" label="id"></el-table-column>
-      <el-table-column type="index" align="center" label="编号" min-width="10%"></el-table-column>
-      <el-table-column align="center" prop="userName" label="账号" min-width="20%"></el-table-column>
-      <el-table-column align="center" prop="realName" label="中文名" min-width="20%"></el-table-column>
-      <el-table-column align="center" prop="status" label="状态" min-width="15%"></el-table-column>
-      <el-table-column align="center" label="操作" min-width="30%">
+    <el-table v-loading="isLoading" :data="tableData" highlight-current-row :fit=true style="width: 100%">
+      <el-table-column align="center" prop="id" label="id" width="180" v-if="false"></el-table-column>
+      <el-table-column align="center" prop="name" label="角色名称" width="180"></el-table-column>
+      <el-table-column align="center" prop="describe" label="描述" width="180"></el-table-column>
+      <el-table-column align="center" label="操作">
         <template #default="scope">
           <el-button size="mini" @click="toUpdate(scope.$index, scope.row)">编辑</el-button>
-          <el-button size="mini" @click="toEditUserRole(scope.$index, scope.row)">角色</el-button>
+          <el-button size="mini" @click="toEditRolePermission(scope.$index, scope.row)">角色</el-button>
           <el-button size="mini" type="danger" @click="toDel(scope.$index, scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
 
 
-    <form-dialog ref="userDialog" :submit-fn="submitFn" :after-submit-fn="findByCond">
+    <form-dialog ref="roleDialog" :submit-fn="submitFn" :after-submit-fn="findByCond">
       <template v-slot:body>
-        <user-form :userFormData="formData" @clear="clear"/>
+        <role-form :roleFormData="formData" @clear="clear"/>
       </template>
     </form-dialog>
 
     <el-dialog
-        title="编辑角色"
+        title="编辑权限"
         :model-value="userRoleDialogVisible"
         width="80%"
         :before-close="handleClose">
-      <user-role :id="id" :timeStamp="timeStamp" ref="userRoleRef"/>
+      <role-permission :id="id" :timeStamp="timeStamp" ref="userRoleRef"/>
 
     </el-dialog>
-
   </div>
 </template>
 
 <script>
-import bind from '../../../utils/index.handle'
 import {getCurrentInstance, ref} from "vue";
-import user from "../../../apis/user";
+import bind from "../../../utils/index.handle";
 
 export default {
   name:'index',
   setup() {
     const queryForm = ref({
-      userName:'',
-      realName:'',
+      name:'',
+      describe:'',
       status:''
     })
 
     const formData = ref({
-      userName:null,
-      realName:null,
+      name:null,
+      describe:null,
       id:null
     })
 
-
     const {proxy} = getCurrentInstance();
     const bindHandle = bind({
-      module:'user',
+      module:'role',
       queryForm:queryForm,
       formData:formData,
-      dialog:'userDialog'
+      dialog:'roleDialog'
     }, proxy);
 
     const userRoleDialogVisible = ref(false)
     const id = ref(0)
     const timeStamp = ref(0)
 
-    const toEditUserRole = (index, row) => {
+    const toEditRolePermission = (index, row) => {
       id.value = row.id
       timeStamp.value = new Date().getTime()
       userRoleDialogVisible.value = true
@@ -102,7 +96,7 @@ export default {
       queryForm,
       formData,
       userRoleDialogVisible,
-      toEditUserRole,
+      toEditRolePermission,
       handleClose,
       id,
       timeStamp

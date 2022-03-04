@@ -1,6 +1,6 @@
 import flat from 'flat'
 import _ from 'lodash'
-
+const modules = import.meta.glob('../views/*/*/*.vue');
 const filterAndAddRouter = (navMenus) => {
   const arr = []
   const flatten = flat.flatten(navMenus)
@@ -16,7 +16,8 @@ const filterAndAddRouter = (navMenus) => {
             title: obj.title
           },
 
-          component: () => import(/* @vite-ignore */`/src/views/${obj.viewPath}`)
+          // component: () => import(`./src/views/${obj.viewPath}.vue`)
+          component: modules[`../views/${obj.viewPath}.vue`]
         })
       }
     }

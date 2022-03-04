@@ -10,13 +10,18 @@ import path from "path"
 export default defineConfig({
   plugins:[
     // ...
-    vue(),
+    vue({
+      include: [/\.vue$/, /\.md$/],
+    }),
     AutoImport({
       resolvers:[ElementPlusResolver()],
     }),
     Components({
+      deep : true ,
       dirs:['src/components', 'src/views'],
       resolvers:[ElementPlusResolver()],
+      include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
+      dts: 'src/components.d.ts'
     }),
   ],
   resolve:{

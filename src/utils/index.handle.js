@@ -3,13 +3,12 @@ import apis from '../apis'
 import to from 'await-to-js'
 import {ElMessage, ElMessageBox} from 'element-plus'
 
-export default function bind({module, queryForm, formData, dialog}, instance) {
+export default function bind({module, queryForm, formData, dialog}, proxy) {
 
   const tableData = ref([])
   const isLoading = ref(false)
   const action = ref('add')
   const tableHeight = ref(0)
-  const {ctx} = instance;
   const m = module.replace(module[0], module[0].toUpperCase())
   tableHeight.value = parent.window.outerHeight - 250
   const fn = {
@@ -24,8 +23,10 @@ export default function bind({module, queryForm, formData, dialog}, instance) {
   const findByCond = async() => {
     isLoading.value = true
     const [err, {data}] = await to(fn.findByCond(queryForm.value))
+
     if (err) {
       ElMessage.error(err.message || '加载异常，请重试')
+      proxy.$message("xxxxx")
     } else {
       tableData.value = data[`${module}s`]
     }
@@ -35,7 +36,7 @@ export default function bind({module, queryForm, formData, dialog}, instance) {
   const toAdd = async() => {
     formData.value = {}
     action.value = 'add'
-    ctx.$refs[dialog].openDialog()
+    proxy.$refs[dialog].openDialog()
   }
 
   const toUpdate = async(index, row) => {
@@ -46,7 +47,7 @@ export default function bind({module, queryForm, formData, dialog}, instance) {
       if (data.type) {
         formData.value = data[module]
         action.value = 'update'
-        ctx.$refs[dialog].openDialog()
+        proxy.$refs[dialog].openDialog()
       } else {
 
       }

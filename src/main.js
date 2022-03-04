@@ -15,9 +15,6 @@ const app = createApp(App)
 app.config.globalProperties.$apis = apis
 app.config.globalProperties.$message = ElMessage
 app.config.globalProperties.$confirm = ElMessageBox.confirm
-app.config.globalProperties.test = () => {
-  console.log("globalProperties")
-}
 app.component('font-awesome-icon', FontAwesomeIcon)
   .use(router)
   .use(store)

@@ -4,7 +4,6 @@
       <!-- 最后一级菜单 -->
       <el-menu-item v-if="!navMenu.children&&navMenu"
                     :data="navMenu" :index="(navMenu.path || '')" @click="selectMenu(navMenu)">
-        <i :class="navMenu.icon"></i>
         <template #title>
           <font-awesome-icon :icon="navMenu.icon" class="icon"/>
           <span> {{ navMenu.title }}</span>

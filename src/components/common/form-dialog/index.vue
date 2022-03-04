@@ -87,6 +87,7 @@ export default {
       this.$confirm('确认关闭？')
           .then(() => {
             done()
+            this.dialogVisible = false
           })
           .catch(() => {
           })

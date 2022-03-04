@@ -1,10 +1,10 @@
 <template>
-  <el-form ref="form" :model="permissionFormData" :rules="rules" label-width="80px">
-    <el-form-item label="权限名称" prop="permissionName">
-      <el-input v-model="permissionFormData.permissionName"></el-input>
+  <el-form ref="form" :model="roleFormData" :rules="rules" label-width="80px">
+    <el-form-item label="角色名称" prop="name">
+      <el-input v-model="roleFormData.name"></el-input>
     </el-form-item>
-    <el-form-item label="权限代码" prop="permissionCode">
-      <el-input v-model="permissionFormData.permissionCode"></el-input>
+    <el-form-item label="角色描述" prop="describe">
+      <el-input v-model="roleFormData.describe"></el-input>
     </el-form-item>
   </el-form>
 </template>
@@ -14,8 +14,8 @@ import formHandle from "../../../utils/form.handle";
 import {getCurrentInstance} from "vue";
 
 export default {
-  name:'permissionForm',
-  props:['permissionFormData'],
+  name:'roleForm',
+  props:['roleFormData'],
   setup(props) {
     const {proxy} = getCurrentInstance()
     const {validate, clear} = formHandle(proxy)
@@ -27,11 +27,11 @@ export default {
   data() {
     return {
       rules:{
-        permissionName:[
+        name:[
           {required:true, message:'权限名称', trigger:'blur'}
         ],
-        permissionCode:[
-          {required:true, message:'权限代码', trigger:'blur'}
+        describe:[
+          {required:true, message:'角色描述', trigger:'blur'}
         ]
       }
     }

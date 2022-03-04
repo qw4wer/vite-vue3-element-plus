@@ -1,14 +1,13 @@
 import {inject} from "vue";
 
-export default function formHandle(instance) {
-  const {ctx} = instance
+export default function formHandle(proxy) {
   const register = inject("register");
   register(function () {
-    return ctx;
+    return proxy;
   });
 
   const validate = () => {
-    const {form} = ctx.$refs
+    const {form} = proxy.$refs
     return new Promise((resolve, reject) => {
       form.validate((valid) => {
         resolve(valid)
@@ -17,7 +16,7 @@ export default function formHandle(instance) {
   }
 
   const clear = () => {
-    ctx.$emit("clear")
+    proxy.$emit("clear")
   }
 
   return {

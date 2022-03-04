@@ -17,7 +17,8 @@ export default {
   name:'user-form',
   props:['userFormData'],
   setup(props) {
-    const {validate, clear} = formHandle(getCurrentInstance());
+    const {proxy} = getCurrentInstance()
+    const {validate, clear} = formHandle(proxy);
     return {
       validate,
       clear
