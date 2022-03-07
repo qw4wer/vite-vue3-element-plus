@@ -58,14 +58,20 @@ router.beforeEach((to, from, next) => {
     // 未拉取菜单
     if (store.state.nav.navMenus.length === 0) {
       api.user.getRouterAndPermissions(token).then(({data}) => {
-        const {routers} = data
-        store.dispatch('nav/initNavMenu', routers)
-        const childrenRouters = utils.filterAndAddRouter(routers)
-        _.set(indexRouter, '0.children', _.concat(_.get(indexRouter, '0.children'), childrenRouters))
-        indexRouter.forEach(value => {
-          router.addRoute(value)
-        })
-        next({...to})
+        const {routers, type} = data
+        if (type) {
+          store.dispatch('nav/initNavMenu', routers)
+          const childrenRouters = utils.filterAndAddRouter(routers)
+          _.set(indexRouter, '0.children', _.concat(_.get(indexRouter, '0.children'), childrenRouters))
+          indexRouter.forEach(value => {
+            router.addRoute(value)
+          })
+          next({...to})
+        } else {
+          db.remove('token')
+          next('/login')
+        }
+
       })
     } else {
       // 选中tab和导航

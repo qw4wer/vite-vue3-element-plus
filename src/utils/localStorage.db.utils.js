@@ -11,5 +11,9 @@ db.get = (key) => {
   return store2(key)
 }
 
+db.remove = (key)=>{
+  store2.remove(key)
+}
+
 
 export default db
