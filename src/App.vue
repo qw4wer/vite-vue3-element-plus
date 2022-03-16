@@ -7,7 +7,7 @@
 </template>
 
 <style>
-html,body,body,#app {
+html, body, #app {
   margin: 0;
   padding: 0;
   height: 100%;

@@ -17,11 +17,10 @@ export default {
   name:'permissionForm',
   props:['permissionFormData'],
   setup(props) {
-    const {proxy} = getCurrentInstance()
-    const {validate, clear} = formHandle(proxy)
+    const {validate, clear} = formHandle()
     return {
       validate,
-      clear
+      clear,
     }
   },
   data() {

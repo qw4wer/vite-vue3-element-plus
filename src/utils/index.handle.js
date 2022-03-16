@@ -1,7 +1,7 @@
-import {ref} from 'vue'
+import {computed, nextTick, ref, watch} from 'vue'
 import apis from '../apis'
 import to from 'await-to-js'
-import {ElMessage, ElMessageBox} from 'element-plus'
+import {useStore} from 'vuex'
 
 export default function bind({module, queryForm, formData, dialog}, proxy) {
 
@@ -10,6 +10,13 @@ export default function bind({module, queryForm, formData, dialog}, proxy) {
   const action = ref('add')
   const tableHeight = ref(0)
   const m = module.replace(module[0], module[0].toUpperCase())
+  const store = useStore()
+  const _formData = JSON.parse(JSON.stringify(formData.value))
+
+  const newFormData = computed(() => {
+    return JSON.stringify(formData.value)
+  })
+
   tableHeight.value = parent.window.outerHeight - 250
   const fn = {
     add:apis[module][`add${m}`],
@@ -25,8 +32,7 @@ export default function bind({module, queryForm, formData, dialog}, proxy) {
     const [err, {data}] = await to(fn.findByCond(queryForm.value))
 
     if (err) {
-      ElMessage.error(err.message || '加载异常，请重试')
-      proxy.$message("xxxxx")
+      proxy.$message.error(err.message || '加载异常，请重试')
     } else {
       tableData.value = data[`${module}s`]
     }
@@ -34,7 +40,6 @@ export default function bind({module, queryForm, formData, dialog}, proxy) {
   }
 
   const toAdd = async() => {
-    formData.value = {}
     action.value = 'add'
     proxy.$refs[dialog].openDialog()
   }
@@ -42,12 +47,14 @@ export default function bind({module, queryForm, formData, dialog}, proxy) {
   const toUpdate = async(index, row) => {
     const [err, {data}] = await to(fn.findById(row.id))
     if (err) {
-      ElMessage.error(err.message || '加载异常，请重试')
+      proxy.$message.error(err.message || '加载异常，请重试')
     } else {
       if (data.type) {
         formData.value = data[module]
         action.value = 'update'
         proxy.$refs[dialog].openDialog()
+        await nextTick()
+        await store.dispatch('form/resetFormChange')
       } else {
 
       }
@@ -85,26 +92,39 @@ export default function bind({module, queryForm, formData, dialog}, proxy) {
     return data
   }
 
-  const clear = () => {
+  const clear = async() => {
     formData.value = {}
+    await nextTick()
+    await store.dispatch('form/resetFormChange')
   }
 
   const toDel = async(index, row) => {
-    const [err, type] = await to(ElMessageBox.confirm("是否删除"))
+    const [err, type] = await to(proxy.$confirm("是否删除"))
     if (!err) {
       const [err, {data}] = await to(fn.del(row.id))
       if (err) {
-        ElMessage.error({
+        proxy.$message.error({
           message:'删除失败',
         })
       } else if (data.type) {
-        ElMessage.success({
+        proxy.$message.success({
           message:'删除成功',
         })
         await findByCond()
       }
     }
   }
+
+
+  watch(newFormData, async(newData, oldData) => {
+    const f1 = JSON.parse(newData)
+    const f2 = JSON.parse(oldData)
+    if (f1 != f2) {
+      await store.dispatch('form/setFormChange', true)
+    }
+  }, {
+    deep:true
+  })
 
   return {
     tableData,

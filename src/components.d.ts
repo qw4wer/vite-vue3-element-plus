@@ -25,7 +25,6 @@ declare module 'vue' {
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
     ElTabs: typeof import('element-plus/es')['ElTabs']
-    ElTree: typeof import('element-plus/es')['ElTree']
     FormDialog: typeof import('./components/common/form-dialog/index.vue')['default']
     Home: typeof import('./views/home.vue')['default']
     Loading: typeof import('element-plus/es')['ElLoadingDirective']

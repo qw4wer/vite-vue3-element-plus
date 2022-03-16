@@ -26,8 +26,7 @@ export default {
   name:'router-form',
   props:['routerFormData'],
   setup(props) {
-    const {proxy} = getCurrentInstance()
-    const {validate, clear} = formHandle(proxy);
+    const {validate, clear} = formHandle();
     return {
       validate,
       clear

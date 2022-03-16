@@ -29,15 +29,16 @@
       <el-table-column align="center" prop="status" label="状态" min-width="15%"></el-table-column>
       <el-table-column align="center" label="操作" min-width="30%">
         <template #default="scope">
-          <el-button size="mini" @click="toUpdate(scope.$index, scope.row)">编辑</el-button>
-          <el-button size="mini" @click="toEditUserRole(scope.$index, scope.row)">角色</el-button>
-          <el-button size="mini" type="danger" @click="toDel(scope.$index, scope.row)">删除</el-button>
+          <el-button size="small" @click="toUpdate(scope.$index, scope.row)">编辑</el-button>
+          <el-button size="small" @click="toEditUserRole(scope.$index, scope.row)">角色</el-button>
+          <el-button size="small" type="danger" @click="toDel(scope.$index, scope.row)">删除</el-button>
         </template>
       </el-table-column>
+
     </el-table>
 
 
-    <form-dialog ref="userDialog" :submit-fn="submitFn" :after-submit-fn="findByCond">
+    <form-dialog title="新建/修改用户" ref="userDialog" :submit-fn="submitFn" :after-submit-fn="findByCond">
       <template v-slot:body>
         <user-form :userFormData="formData" @clear="clear"/>
       </template>
@@ -75,14 +76,13 @@ export default {
       id:null
     })
 
-
-    const {proxy} = getCurrentInstance();
+    const {proxy} = getCurrentInstance()
     const bindHandle = bind({
       module:'user',
       queryForm:queryForm,
       formData:formData,
       dialog:'userDialog'
-    }, proxy);
+    }, proxy)
 
     const userRoleDialogVisible = ref(false)
     const id = ref(0)

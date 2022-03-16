@@ -26,17 +26,17 @@
       <el-table-column align="center" prop="describe" label="描述" width="180"></el-table-column>
       <el-table-column align="center" label="操作">
         <template #default="scope">
-          <el-button size="mini" @click="toUpdate(scope.$index, scope.row)">编辑</el-button>
-          <el-button size="mini" @click="toEditRolePermission(scope.$index, scope.row)">角色</el-button>
-          <el-button size="mini" type="danger" @click="toDel(scope.$index, scope.row)">删除</el-button>
+          <el-button size="small" @click="toUpdate(scope.$index, scope.row)">编辑</el-button>
+          <el-button size="small" @click="toEditRolePermission(scope.$index, scope.row)">角色</el-button>
+          <el-button size="small" type="danger" @click="toDel(scope.$index, scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
 
 
-    <form-dialog ref="roleDialog" :submit-fn="submitFn" :after-submit-fn="findByCond">
+    <form-dialog title="新建/修改角色" ref="roleDialog" :submit-fn="submitFn" :after-submit-fn="findByCond">
       <template v-slot:body>
-        <role-form :roleFormData="formData" @clear="clear"/>
+        <role-form :roleFormData="formData"/>
       </template>
     </form-dialog>
 

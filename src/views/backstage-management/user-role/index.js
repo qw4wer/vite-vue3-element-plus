@@ -10,8 +10,6 @@ export default function userRole(props) {
 
   const {id} = toRefs(props)
 
-
-
   const loadRoleData = async(userId) => {
     const [err, {data}] = await to(proxy.$apis.userRole.findUserRoleByUserId(userId))
     if (!err) {

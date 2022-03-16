@@ -6,11 +6,7 @@ import utils from '../utils/common.utils'
 import _ from 'lodash'
 
 const routes = [
-  // {
-  //   path:'/:pathMatch(.*)*',
-  //   name:'NotFound',
-  //   component:() => import("@/views/404.vue")
-  // },
+
   {
     path:'/login',
     name:'login',
@@ -20,7 +16,7 @@ const routes = [
     path:'/',
     name:'index',
     component:() => import('@/views/index.vue'),
-  }
+  },
 ]
 
 const indexRouter = [
@@ -47,7 +43,6 @@ const router = createRouter({
 const whitelist = ['/test']
 
 router.beforeEach((to, from, next) => {
-  console.log({to, from})
   // store.dispatch('navigation/init', to.fullPath)
   const token = db.get('token')
   if (whitelist.includes(to.path)) {
@@ -63,6 +58,12 @@ router.beforeEach((to, from, next) => {
           store.dispatch('nav/initNavMenu', routers)
           const childrenRouters = utils.filterAndAddRouter(routers)
           _.set(indexRouter, '0.children', _.concat(_.get(indexRouter, '0.children'), childrenRouters))
+          //404
+          indexRouter.push({
+            path:'/:pathMatch(.*)*',
+            name:'NotFound',
+            component:() => import("@/views/404.vue")
+          })
           indexRouter.forEach(value => {
             router.addRoute(value)
           })

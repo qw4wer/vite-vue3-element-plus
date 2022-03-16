@@ -1,7 +1,9 @@
 import nav from './nav.store'
 import tabs from './tabs.store'
+import form from './form.store'
 
-export default{
+export default {
   nav,
-  tabs
+  tabs,
+  form
 }

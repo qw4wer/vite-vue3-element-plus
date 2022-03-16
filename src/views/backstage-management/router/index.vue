@@ -20,7 +20,7 @@
 
     <button @click="save">保存</button>
 
-    <form-dialog ref="routerDialog" :submit-fn="submitFn" :after-submit-fn="()=>{}">
+    <form-dialog title="新建/修改路由" ref="routerDialog" :submit-fn="submitFn" :after-submit-fn="()=>{}">
       <template v-slot:body>
         <router-form :routerFormData="formData" @clear="clear"/>
       </template>

@@ -26,14 +26,14 @@
       <el-table-column align="center" prop="permissionCode" label="权限代码" width="180"></el-table-column>
       <el-table-column align="center" label="操作">
         <template #default="scope">
-          <el-button size="mini" @click="toUpdate(scope.$index, scope.row)">编辑</el-button>
-          <el-button size="mini" type="danger" @click="toDel(scope.$index, scope.row)">删除</el-button>
+          <el-button size="small" @click="toUpdate(scope.$index, scope.row)">编辑</el-button>
+          <el-button size="small" type="danger" @click="toDel(scope.$index, scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
 
 
-    <form-dialog ref="permissionDialog" :submit-fn="submitFn" :after-submit-fn="findByCond">
+    <form-dialog title="新建/修改权限" ref="permissionDialog" :submit-fn="submitFn" :after-submit-fn="findByCond">
       <template v-slot:body>
         <permission-form :permissionFormData="formData" @clear="clear"/>
       </template>

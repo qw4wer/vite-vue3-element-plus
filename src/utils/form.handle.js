@@ -1,9 +1,13 @@
-import {inject} from "vue";
+import {getCurrentInstance, inject, watch} from "vue";
 
-export default function formHandle(proxy) {
+import {useStore} from "vuex"
+
+export default function formHandle() {
+  const {proxy} = getCurrentInstance()
   const register = inject("register");
+  const store = useStore()
   register(function () {
-    return proxy;
+    return proxy
   });
 
   const validate = () => {
@@ -22,7 +26,8 @@ export default function formHandle(proxy) {
   return {
     validate,
     clear
+
   }
 
 }
-;
+
