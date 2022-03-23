@@ -17,6 +17,11 @@ const routes = [
     name:'index',
     component:() => import('@/views/index.vue'),
   },
+  {
+    path:'/yunpan',
+    name:'yunpan',
+    component:() => import('@/views/yunpan/file.vue'),
+  },
 ]
 
 const indexRouter = [
