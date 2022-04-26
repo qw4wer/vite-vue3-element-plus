@@ -27,7 +27,7 @@
       <el-table-column align="center" label="操作">
         <template #default="scope">
           <el-button size="small" @click="toUpdate(scope.$index, scope.row)">编辑</el-button>
-          <el-button size="small" @click="toEditRolePermission(scope.$index, scope.row)">角色</el-button>
+          <el-button size="small" @click="toEditRolePermission(scope.$index, scope.row)">权限</el-button>
           <el-button size="small" type="danger" @click="toDel(scope.$index, scope.row)">删除</el-button>
         </template>
       </el-table-column>
