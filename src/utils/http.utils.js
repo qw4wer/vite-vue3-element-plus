@@ -30,7 +30,8 @@ const upload = (options) => {
     data:data,
     onUploadProgress:evt => {
       uploadProgressCallback && uploadProgressCallback(evt)
-    }
+    },
+
   })
 
 

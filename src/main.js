@@ -10,6 +10,7 @@ import store from './store'
 import 'element-plus/es/components/message/style/css'
 import 'element-plus/es/components/message-box/style/css'
 
+
 library.add(fas)
 const app = createApp(App)
 app.config.globalProperties.$apis = apis
@@ -20,4 +21,3 @@ app.component('font-awesome-icon', FontAwesomeIcon)
   .use(store)
   .use(ElMessage)
   .mount('#app')
-

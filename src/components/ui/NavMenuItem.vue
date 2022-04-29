@@ -5,7 +5,9 @@
       <el-menu-item v-if="!navMenu.children&&navMenu"
                     :data="navMenu" :index="(navMenu.path || '')" @click="selectMenu(navMenu)">
         <template #title>
-          <font-awesome-icon :icon="navMenu.icon" class="icon"/>
+          <el-icon>
+            <font-awesome-icon :icon="navMenu.icon" class="icon"/>
+          </el-icon>
           <span> {{ navMenu.title }}</span>
         </template>
       </el-menu-item>
