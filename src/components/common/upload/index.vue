@@ -6,8 +6,8 @@
     </el-button>
     <template #dropdown>
       <el-dropdown-menu>
-        <el-dropdown-item @click="selectFile">选择文件</el-dropdown-item>
-        <el-dropdown-item @click="selectFolder">选择文件夹</el-dropdown-item>
+        <el-dropdown-item @click="selectFile">上传文件</el-dropdown-item>
+        <el-dropdown-item @click="selectFolder">上传文件夹</el-dropdown-item>
       </el-dropdown-menu>
     </template>
   </el-dropdown>
