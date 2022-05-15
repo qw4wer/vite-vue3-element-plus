@@ -17,7 +17,7 @@
     "store2": "2.13.2",
     "unplugin-element-plus": "0.3.2",
     "vue": "3.2.31",
-    "vue-router": "4.0.14",
+    "vue-router": "^4.0.15",
     "vue-virtual-scroller": "^2.0.0-alpha.1",
     "vuex": "4.0.2"
   },

@@ -31,14 +31,25 @@ const upload = (options) => {
     onUploadProgress:evt => {
       uploadProgressCallback && uploadProgressCallback(evt)
     },
-
   })
-
-
+}
+const down = (options) => {
+  const {url, data, header,downloadProgress} = options
+  return axios({
+    method:'post',
+    url:url,
+    header:Object.assign({}, header),
+    data:data,
+    responseType:"blob",
+    onDownloadProgress:evt=>{
+      downloadProgress && downloadProgress(evt)
+    }
+  })
 }
 
 export default {
   get,
   post,
-  upload
+  upload,
+  down
 }
