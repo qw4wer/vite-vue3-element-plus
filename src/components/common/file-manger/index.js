@@ -106,38 +106,38 @@ export const fileManger = (props) => {
     window.URL.revokeObjectURL(url);
   }
   const downloadPack = async() => {
-    const path = {multiple:[]}
+    const selectPath = {multiple:[]}
     selectRows.value.forEach(value => {
-      path.multiple.push(value.name)
+      selectPath.multiple.push(`${path.value}\\${value.name}`)
     })
 
-    console.log(path);
+    console.log(selectPath);
 
-    // const [err, res] = await to(httpUtils.down({
-    //   url:'http://127.0.0.1:3000/api/files/downFile',
-    //   data:path,
-    //   downloadProgress:(evt) => {
-    //     console.log(evt)
-    //   }
-    // }))
-    // if (err) {
-    //
-    // }
-    // const {data, headers} = res
-    // let filename = ''
-    // if (headers['content-disposition']) {
-    //   filename = headers['content-disposition'].match(/filename\*=(.*)/)[1]; // 获取filename*的值
-    //   filename = decodeURIComponent(filename.substring(7)) // 这个下标6就是UTF-8''
-    // }
-    //
-    // let blob = new Blob([data]); // 为blob设置文件类型，这里以.xlsx为例
-    // let url = window.URL.createObjectURL(blob); // 创建一个临时的url指向blob对象
-    // let a = document.createElement("a")
-    // a.href = url
-    // a.download = filename
-    // a.click()
-    // // 释放这个临时的对象url
-    // window.URL.revokeObjectURL(url);
+    const [err, res] = await to(httpUtils.down({
+      url:'http://127.0.0.1:3000/api/files/multipleDownByZip',
+      data:selectPath,
+      downloadProgress:(evt) => {
+        console.log(evt)
+      }
+    }))
+    if (err) {
+    
+    }
+    const {data, headers} = res
+    let filename = ''
+    if (headers['content-disposition']) {
+      filename = headers['content-disposition'].match(/filename\*=(.*)/)[1]; // 获取filename*的值
+      filename = decodeURIComponent(filename.substring(7)) // 这个下标6就是UTF-8''
+    }
+    
+    let blob = new Blob([data]); // 为blob设置文件类型，这里以.xlsx为例
+    let url = window.URL.createObjectURL(blob); // 创建一个临时的url指向blob对象
+    let a = document.createElement("a")
+    a.href = url
+    a.download = filename
+    a.click()
+    // 释放这个临时的对象url
+    window.URL.revokeObjectURL(url);
   }
 
   const rowClick = (row, column, event) => {
