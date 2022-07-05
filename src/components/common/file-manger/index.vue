@@ -3,53 +3,88 @@
     <div class="main">
       <!--  面包屑路径    -->
       <el-breadcrumb separator="/" style="margin-left: 15px">
-        <el-breadcrumb-item v-for="(item, index) in breadcrumbList" :key="index">
+        <el-breadcrumb-item
+          v-for="(item, index) in breadcrumbList"
+          :key="index"
+        >
           <el-link @click="selectPath(index)">{{ item }}</el-link>
         </el-breadcrumb-item>
       </el-breadcrumb>
-      <el-table ref="fileTableRef" :data="tableData" style="width: 100%" @row-click="rowClick"
-                @selection-change="selectionChange">
-        <el-table-column type="selection" width="55"/>
+      <el-table
+        ref="fileTableRef"
+        :data="tableData"
+        style="width: 100%"
+        @row-click="rowClick"
+        @selection-change="selectionChange"
+      >
+        <el-table-column type="selection" width="55" />
         <el-table-column label="文件名" min-width="50%" prop="name">
           <template #default="scope">
-            <font-awesome-icon :icon="scope.row.isDir? 'folder':'file'" class="icon"/>
-            <el-link @click.stop="selectFile(scope.row)">{{ scope.row.name }}</el-link>
+            <font-awesome-icon
+              :icon="scope.row.isDir ? 'folder' : 'file'"
+              class="icon"
+            />
+            <el-link @click.stop="selectFile(scope.row)">{{
+              scope.row.name
+            }}</el-link>
           </template>
         </el-table-column>
-        <el-table-column align="center" label="大小" min-width="15%" prop="size"/>
-        <el-table-column align="center" label="日期" min-width="20%" prop="modTime"/>
+        <el-table-column
+          align="center"
+          label="大小"
+          min-width="15%"
+          prop="size"
+        />
+        <el-table-column
+          align="center"
+          label="日期"
+          min-width="20%"
+          prop="modTime"
+        />
       </el-table>
     </div>
-    <div :class="{open:optionShow}" class="options">
+    <div :class="{ open: optionShow }" class="options">
       <div><span>操作</span></div>
-      <el-button size="large" type="primary" @click="downloadFile">下载</el-button>
-      <el-button size="large" type="primary" @click="downloadPack">打包</el-button>
-      <el-button size="large">预览</el-button>
-      <el-button size="large">删除</el-button>
+      <el-button size="large" type="primary" @click="downloadFile" v-if="canDownFile">下载</el-button>
+      <el-button size="large" type="primary" @click="downloadPack" v-if="!canDownFile">打包</el-button>
+      <el-button size="large" type="primary" @click="preview" v-if="canPerview">预览</el-button>
+      <el-button size="large" type="danger">删除</el-button>
     </div>
   </div>
 </template>
 
 <script>
-import {fileManger} from "../file-manger";
+import { fileManger } from "../file-manger";
 
 export default {
-  name:"file-manger",
+  name: "file-manger",
   setup(props) {
-    return {...fileManger(props)}
+    return { ...fileManger(props) };
   },
-  props:{
-    requestUrl:{
-      default:'',
-      type:String
-    }
-  }
-}
+  props: {
+    requestUrl: {
+      default: "",
+      type: String,
+    },
+    downloadFileUrl: {
+      default: "",
+      type: String,
+    },
+    multipleDownByZipUrl: {
+      default: "",
+      type: String,
+    },
+    previewUrl: {
+      default: "",
+      type: String,
+    },
+  },
+};
 </script>
 
 <style scoped>
 .icon {
-  padding-right: 10px
+  padding-right: 10px;
 }
 
 .manger {
@@ -57,7 +92,6 @@ export default {
   flex-direction: row;
   margin-top: 20px;
   width: 100%;
-
 }
 
 .manger .main {
@@ -78,7 +112,7 @@ export default {
   border-style: solid;
   border-width: 0;
   border-radius: 3px;
-  align-content: space-between
+  align-content: space-between;
 }
 
 .manger .options * {
@@ -94,5 +128,4 @@ export default {
 .el-button + .el-button {
   margin-left: 0px !important;
 }
-
 </style>

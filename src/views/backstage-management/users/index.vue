@@ -59,7 +59,7 @@
 <script>
 import bind from '../../../utils/index.handle'
 import {getCurrentInstance, ref} from "vue";
-import user from "../../../apis/user";
+
 
 export default {
   name:'index',
