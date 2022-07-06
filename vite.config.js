@@ -20,8 +20,7 @@ export default defineConfig({
       deep : true ,
       dirs:['src/components', 'src/views'],
       resolvers:[ElementPlusResolver()],
-      include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
-      dts: 'src/components.d.ts'
+      include: [/\.vue$/, /\.vue\?vue/, /\.md$/]
     }),
   ],
   resolve:{
