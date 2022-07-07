@@ -63,12 +63,12 @@ export default {
       if (!path) {
         return;
       }
-      if (arr.includes(`/${path}`)) {
-        commit('selectItem', `/${path}`)
+      if (arr.includes(path)) {
+        commit('selectItem', path)
       } else {
         commit('addItem', {
           title:title,
-          path:`/${path}`,
+          path:path,
           name:path
         })
       }

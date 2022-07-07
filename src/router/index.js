@@ -31,10 +31,10 @@ const indexRouter = [
     component:() => import('@/views/index.vue'),
     children:[
       {
-        path:'home',
+        path:'/home',
         name:'home',
         component:() => import('/src/views/home.vue'),
-        meta:{path:'home', title:'home'},
+        meta:{path:'/home', title:'home'},
       }
     ]
   },
