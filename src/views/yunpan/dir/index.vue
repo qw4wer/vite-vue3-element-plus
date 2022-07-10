@@ -31,23 +31,17 @@
             <el-table-column align="center" label="操作">
                 <template #default="scope">
                     <el-button size="small" @click="toUpdate(scope.$index, scope.row)">编辑</el-button>
-                    <el-button size="small" @click="toEditDirPermission(scope.$index, scope.row)">权限</el-button>
                     <el-button size="small" type="danger" @click="toDel(scope.$index, scope.row)">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
 
-
         <form-dialog title="新建/修改文件夹" ref="dirDialog" :submit-fn="submitFn" :after-submit-fn="findByCond">
             <template v-slot:body>
-                <dir-form :dirFormData="formData" />
+                <dir-form :dirFormData="formData" @clear="clear" />
             </template>
         </form-dialog>
 
-        <el-dialog title="编辑文件夹" :model-value="dirDirDialogVisible" width="80%" :before-close="handleClose">
-            <dir-permission :id="id" :timeStamp="timeStamp" ref="dirDirRef" />
-
-        </el-dialog>
     </div>
 </template>
 
@@ -60,12 +54,14 @@ export default {
     setup() {
         const queryForm = ref({
             name: '',
+            path: '',
             describe: '',
             status: ''
         })
 
         const formData = ref({
             name: null,
+            path: null,
             describe: null,
             id: null
         })
@@ -78,28 +74,12 @@ export default {
             dialog: 'dirDialog'
         }, proxy);
 
-        const dirDirDialogVisible = ref(false)
-        const id = ref(0)
-        const timeStamp = ref(0)
 
-        const toEditDirPermission = (index, row) => {
-            id.value = row.id
-            timeStamp.value = new Date().getTime()
-            dirDirDialogVisible.value = true
-        }
-        const handleClose = () => {
-            dirDirDialogVisible.value = false
-        }
 
         return {
             ...bindHandle,
             queryForm,
             formData,
-            dirDirDialogVisible,
-            toEditDirPermission,
-            handleClose,
-            id,
-            timeStamp
         }
     },
     computed: {},

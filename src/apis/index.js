@@ -6,6 +6,7 @@ import router from "./router";
 import userRole from './user.role'
 import rolePermission from './role.permission'
 import file from './file'
+import dir from './dir';
 
 
 export default {
@@ -17,4 +18,5 @@ export default {
   userRole:userRole,
   rolePermission:rolePermission,
   file:file,
+  dir:dir
 }
