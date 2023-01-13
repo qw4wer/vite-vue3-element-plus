@@ -4,7 +4,8 @@ const urls = {
   findDirByCond:'/api/dirs/findDirByCond',
   addDir:'/api/dirs/addDir',
   findDirById:'/api/dirs/findDirById',
-  updateDir:'/api/dirs/updateDir'
+  updateDir:'/api/dirs/updateDir',
+  removeDir:'/api/dirs/removeDir'
 }
 
 export default {
@@ -30,6 +31,12 @@ export default {
     return httpUtils.post({
       url:urls.updateDir,
       data:userForm
+    })
+  },
+  removeDir:(id) => {
+    return httpUtils.post({
+      url:urls.removeDir,
+      data:{id:id}
     })
   }
 

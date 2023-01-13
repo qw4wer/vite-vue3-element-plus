@@ -32,6 +32,8 @@
                 <template #default="scope">
                     <el-button size="small" @click="toUpdate(scope.$index, scope.row)">编辑</el-button>
                     <el-button size="small" type="danger" @click="toDel(scope.$index, scope.row)">删除</el-button>
+                    <el-button size="small" @click="toOpen(scope.$index, scope.row)">打开</el-button>
+
                 </template>
             </el-table-column>
         </el-table>
@@ -74,12 +76,17 @@ export default {
             dialog: 'dirDialog'
         }, proxy);
 
+        const toOpen = (index, row) => {
+            window.open(`../yunpan?id=${row.id}`)
+        }
+
 
 
         return {
             ...bindHandle,
             queryForm,
             formData,
+            toOpen
         }
     },
     computed: {},
@@ -88,4 +95,5 @@ export default {
 </script>
 
 <style scoped>
+
 </style>

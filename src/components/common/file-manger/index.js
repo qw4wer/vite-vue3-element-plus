@@ -11,6 +11,7 @@ export const fileManger = (props) => {
   const router = useRouter()
 
   const path = ref()
+  const id = ref()
   const tableData = ref([])
   const breadcrumbList = ref(['root'])
   const selectRows = ref([])
@@ -22,7 +23,7 @@ export const fileManger = (props) => {
     return false
   })
   const canDownFile = computed(() => {
-    if(selectRows.value.length == 1){
+    if (selectRows.value.length == 1) {
       const [one] = selectRows.value
       return !one.isDir
     }
@@ -37,6 +38,7 @@ export const fileManger = (props) => {
 
   onMounted(async () => {
     path.value = route.query.path || ''
+    id.value = route.query.id || 0
   })
 
   watch(path, async (path, oldPath) => {
@@ -48,10 +50,11 @@ export const fileManger = (props) => {
     }
     await router.push({
       query: {
-        path: path
+        path: path,
+        id: id.value
       }
     })
-    await loadFileList(path)
+    await loadFileList(id, path)
     selectRows.value = []
   })
 
@@ -70,10 +73,10 @@ export const fileManger = (props) => {
         toPath = row.name
       }
       path.value = toPath
-    }else{
+    } else {
       fileTableRef.value.toggleRowSelection(row)
     }
-    
+
   }
 
   const selectPath = async (index) => {
@@ -83,9 +86,10 @@ export const fileManger = (props) => {
   }
 
 
-  const loadFileList = async (path) => {
+  const loadFileList = async (id, path) => {
+    const url = requestUrl.value + `/${id.value}`
     const [err, data] = await to(httpUtils.post({
-      url: requestUrl.value,
+      url: url,
       data: {
         path: path
       }
@@ -99,7 +103,7 @@ export const fileManger = (props) => {
 
   const downloadFile = async () => {
     const [err, res] = await to(httpUtils.down({
-      url: downloadFileUrl.value,
+      url: downloadFileUrl.value +  `/${id.value}`,
       data: { path: `${path.value}\\${selectRows.value[0].name}` },
       downloadProgress: (evt) => {
         console.log(evt)
@@ -130,9 +134,8 @@ export const fileManger = (props) => {
       selectPath.multiple.push(`${path.value}\\${value.name}`)
     })
 
-
     const [err, res] = await to(httpUtils.down({
-      url: multipleDownByZipUrl.value,
+      url: multipleDownByZipUrl.value + `//${id.value}`,
       data: selectPath,
       downloadProgress: (evt) => {
         console.log(evt)
@@ -159,9 +162,7 @@ export const fileManger = (props) => {
   }
 
   const preview = async () => {
-    window.open(`${previewUrl.value}\\${path.value}\\${selectRows.value[0].name}`)
-
-
+    window.open(`${previewUrl.value}\\${id.value}\\${path.value}\\${selectRows.value[0].name}`)
   }
 
   const rowClick = (row, column, event) => {

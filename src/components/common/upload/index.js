@@ -1,14 +1,16 @@
-import {computed, onMounted, ref, toRefs} from "vue"
+import { computed, onMounted, ref, toRefs } from "vue"
 
-import {mapLimit} from "async"
+import { mapLimit } from "async"
 import to from "await-to-js";
 import httpUtils from "../../../utils/http.utils"
+import { onBeforeRouteUpdate, useRoute, useRouter } from "vue-router";
 
 
 export const init = (props) => {
-  const {url, multiple, limit, basePath} = toRefs(props)
-
+  const { url, multiple, limit, basePath } = toRefs(props)
+  const id = ref()
   const start = ref(0)
+  const route = useRoute()
 
   const end = computed(() => {
     return start.value + limit.value
@@ -37,19 +39,20 @@ export const init = (props) => {
 
   onMounted(() => {
     warpWidth.value = `${warp.value.offsetWidth * 0.8}px`
+    id.value = route.query.id || 0
   })
 
   const onSelect = (e) => {
-    const {files} = e.target
+    const { files } = e.target
     for (let i = 0; i < files.length; i++) {
       files[i].uid = Date.now() + i
       const uploadFile = {
-        name:files[i].name,
-        percentage:0,
-        status:"ready",
-        size:files[i].size,
-        raw:files[i],
-        uid:files[i].uid
+        name: files[i].name,
+        percentage: 0,
+        status: "ready",
+        size: files[i].size,
+        raw: files[i],
+        uid: files[i].uid
       }
       fileList.value.push(uploadFile)
     }
@@ -61,14 +64,14 @@ export const init = (props) => {
 
     const multipleArr = sliceArray(fileList.value, limit.value)
 
-    mapLimit(multipleArr, 1, async(node) => {
+    mapLimit(multipleArr, 1, async (node) => {
       const percentage = ref(0)
       const status = ref('uploading')
 
       const formData = new FormData()
       node.forEach(value => {
-        const {raw} = value
-        let {webkitRelativePath} = raw
+        const { raw } = value
+        let { webkitRelativePath } = raw
         value.percentage = percentage
         value.status = status
         formData.append("files", raw)
@@ -79,9 +82,9 @@ export const init = (props) => {
       })
 
       const [err] = await to(httpUtils.upload({
-        url:url.value,
-        data:formData,
-        uploadProgressCallback:(evt) => {
+        url: `${url.value}\\${id.value}`,
+        data: formData,
+        uploadProgressCallback: (evt) => {
           percentage.value = Math.round(evt.loaded / evt.total * 100)
         }
       }))
@@ -97,9 +100,9 @@ export const init = (props) => {
   }
 
   const queueUpload = () => {
-    mapLimit(fileList.value, limit.value, async(node) => {
-      const {raw} = node
-      let {webkitRelativePath} = raw
+    mapLimit(fileList.value, limit.value, async (node) => {
+      const { raw } = node
+      let { webkitRelativePath } = raw
       const formData = new FormData()
       formData.append("file", raw)
       if (webkitRelativePath == "") {
@@ -108,9 +111,9 @@ export const init = (props) => {
       formData.append("webkitRelativePath", `${basePath.value}${webkitRelativePath}`)
 
       const [err] = await to(httpUtils.upload({
-        url:url.value,
-        data:formData,
-        uploadProgressCallback:(evt) => {
+        url: `${url.value}\\${id.value}`,
+        data: formData,
+        uploadProgressCallback: (evt) => {
           node.status = 'uploading'
           node.percentage = Math.round(evt.loaded / evt.total * 100)
         }

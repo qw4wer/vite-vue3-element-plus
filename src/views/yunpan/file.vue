@@ -3,7 +3,6 @@
     :url="$apis['file'].multipleUpload"
     :limit="5"
     :multiple="true"
-    basePath="/xxx/"
   ></upload>
   <file-manger
     :requestUrl="$apis['file'].fileList"
